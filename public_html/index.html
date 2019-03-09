@@ -27,11 +27,22 @@ and open the template in the editor.
         <script src="js/app.js" ></script>
         <script src="js/controllers/tableController.js"></script>
         
+        <link href="css/style.css" rel="stylesheet" >
+        
     </head>
     <body ng-app="app">
         <div>TODO write content</div>
         <div ng-controller="tableController" >
-            {{test}}
+            
+            <table class="myTable">
+                <tr>
+                    <th ng-repeat="(key, value) in data[0]">{{value}}</th>
+                </tr>
+                <tr ng-if="$index > 0" ng-repeat="(key, arr) in data">
+                    <td ng-repeat="(key, value) in arr">{{value}}</td>
+                </tr>
+            </table>
+            
         </div>
     </body>
 </html>
