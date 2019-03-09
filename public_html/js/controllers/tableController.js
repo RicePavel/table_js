@@ -1,14 +1,10 @@
-app.controller('tableController', function($scope) {
-    
-    $scope.data = [
-        { id: 'Идентификатор', 
-          name: 'Название', 
-          price: 'Стоимость', 
-          quantity: 'Количество' },
-        [ 1, 'iPhone 5', '400', 5 ],
-        [ 2, 'XBOX', '300', 7 ],
-        [ 2, 'XBOX', '300', 8 ] 
-    ];
+app.controller('tableController', function($scope, dataService) {
+       
+   $scope.data = [];
+   $scope.dataSets = dataService.getDataSets();
+   $scope.loadData = function() {
+       $scope.data = dataService.getData(Number($scope.dataSetId));
+   }
     
 });
 
