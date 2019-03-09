@@ -2,29 +2,44 @@ app.directive("myTable", function(dataService) {
     return {
         link: function($scope, element, attrs) {
             $scope.headData = [];
-            $scope.data = [];
+            $scope.storedData = [];
             $scope.dataSets = dataService.getDataSets();
+
+            $scope.data = [];
+            $scope.filterText = "";
             
             $scope.limit = attrs['limit'] || 10;
             $scope.begin = 0;
             $scope.currentPage = 0;
-            $scope.pagesCount = 0;
+            $scope.countPages = 0;
             $scope.loaded = false;
             
             $scope.sortColumn = undefined;
             $scope.sortRevert = false;
             
             $scope.loadData = function() {
+                $scope.filterText = "";
                 $scope.sortColumn = undefined;
                 $scope.sortRevert = false;
                 var data = dataService.getData(Number($scope.dataSetId));
                 if (data.length > 0) {
                     $scope.headData = data[0];
                     $scope.data = data.slice(1);
+                    $scope.storedData = $scope.data;
                     $scope.loaded = true;
                 }
-                initPageParameters();
+                setCountPages();
                 selectPage(1);
+            };
+            
+            $scope.filterByText = function() {
+                filter();
+                $scope.sortColumn = undefined;
+                $scope.sortRevert = false;
+                setCountPages();
+                if ($scope.currentPage > $scope.countPages) {
+                    selectPage($scope.countPages);
+                }
             };
             
             $scope.range = function(min, max, step) {
@@ -49,7 +64,7 @@ app.directive("myTable", function(dataService) {
             };
             
             $scope.nextPage = function() {
-                if ($scope.currentPage < $scope.pagesCount) {
+                if ($scope.currentPage < $scope.countPages) {
                     selectPage($scope.currentPage + 1);
                 }
                 return false;
@@ -63,6 +78,18 @@ app.directive("myTable", function(dataService) {
                 $scope.sortColumn = column;
                 sort();
             };
+            
+            function filter() {
+                $scope.data = $scope.storedData.filter(function(arr) {
+                    for (var i = 0; i < arr.length; i++) {
+                        var str = String(arr[i]);
+                        if (str.indexOf($scope.filterText) !== -1) {
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+            }
             
             function sort() {
                 if ($scope.sortColumn !== undefined) {
@@ -85,8 +112,8 @@ app.directive("myTable", function(dataService) {
                 }
             }
             
-            function initPageParameters() {
-                $scope.pagesCount = Math.ceil($scope.data.length / $scope.limit);
+            function setCountPages() {
+                $scope.countPages = Math.ceil($scope.data.length / $scope.limit);
             }
             
             function selectPage(n) {
