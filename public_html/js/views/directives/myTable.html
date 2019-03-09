@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 Набор данных 
 <form name="myForm2">
     <label ng-repeat="(key, value) in dataSets" >
@@ -13,9 +8,29 @@ and open the template in the editor.
                         
 <table class="myTable">
     <tr>
-        <th ng-repeat="(key, value) in data[0]">{{value}}</th>
+        <th ng-click="sortThisColumn($index)" ng-repeat="(key, value) in headData" >
+            <span>{{value}}</span> 
+            <span class="thDiv" ng-if="sortColumn !== $index" ></span>
+            <span class="arrow" ng-if="sortColumn === $index && !sortRevert" ></span> 
+            <span class="arrow_revert" ng-if="sortColumn === $index && sortRevert" ></span> 
+        </th>
     </tr>
-    <tr ng-if="$index > 0" ng-repeat="(key, arr) in data">
+    <tr ng-repeat="(key, arr) in data | limitTo: limit : begin">
         <td ng-repeat="(key, value) in arr">{{value}}</td>
     </tr>
+    <!--
+    <tr ng-repeat="(key, arr) in data" ng-show="$index >= begin && $index < (begin + limit)" >
+        <td ng-repeat="(key, value) in arr">{{value}}</td>
+    </tr>
+    -->
 </table>
+
+
+<div class="pagination" ng-show="loaded && pagesCount > 1">
+    <a href="#" ng-click="prevPage()"><<</a>
+    <a ng-class="{'active': n === currentPage}" 
+       ng-repeat="n in range(1, pagesCount)" href="#" ng-click="selectPage(n)" >{{n}}</a>
+    <a href="#" ng-click="nextPage()">>></a>
+</div>
+
+<br/>

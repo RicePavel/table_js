@@ -34,30 +34,10 @@ and open the template in the editor.
     </head>
     <body ng-app="app">
         <div ng-controller="tableController" >
-            
             <div class="container">
-                <!--
-                Набор данных 
-                <form name="myForm2">
-                    <label ng-repeat="(key, value) in dataSets" >
-                        <input type="radio" name="dataSetId" ng-model="$parent.dataSetId" value="{{value.id}}" ng-change="loadData()" >{{value.name}}
-                    </label>
-                </form>       
-                <table class="myTable">
-                    <tr>
-                        <th ng-repeat="(key, value) in data[0]">{{value}}</th>
-                    </tr>
-                    <tr ng-if="$index > 0" ng-repeat="(key, arr) in data">
-                        <td ng-repeat="(key, value) in arr">{{value}}</td>
-                    </tr>
-                </table>
-                -->
-
-                <div my-table ></div>
-
-                <button ng-click="addYet()">Добавить еще один</button>
+                <my-table limit="3"/>
             </div>
-            
+            <button ng-click="addYet()">Добавить еще один</button>
         </div>
     </body>
 </html>

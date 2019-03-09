@@ -1,12 +1,3 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 09.03.2019, 13:09:36
-    Author     : administrator
-*/
 
 .myTable {
     border-collapse: collapse;
@@ -15,4 +6,57 @@ and open the template in the editor.
 .myTable td, .myTable th {
     border: 1px solid black;
     padding: 10px;
+}
+
+.myTable th:hover {
+    cursor: pointer;
+}
+
+.thDiv {
+    width: 10px;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    float: right;
+    margin-top: 7px;
+    margin-left: 2px;
+}
+
+.myTable th .arrow_revert {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #2f2f2f;
+    font-size: 0;
+    line-height: 0;
+    float: right;
+    margin-top: 7px;
+    margin-left: 2px;
+}
+
+.myTable th .arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    /* border-top: 5px solid #2f2f2f; */
+    border-bottom: 5px solid #2f2f2f;
+    font-size: 0;
+    line-height: 0;
+    float: right;
+    margin-top: 7px;
+    margin-left: 2px;
+}
+
+.pagination {
+    padding: 10px;
+}
+
+.pagination a {
+    padding: 10px;
+}
+
+.pagination a.active {
+    background: lightgray;
 }
