@@ -18,6 +18,7 @@ app.directive("myTable", function(dataService, $document) {
             $scope.sortRevert = false;
             
             $scope.selectedText = "";
+            $scope.selectedObj = undefined;
             
             $scope.loadData = function() {
                 resetSelection();
@@ -68,12 +69,14 @@ app.directive("myTable", function(dataService, $document) {
                 var column = Number(number);
                 if (column === $scope.sortColumn) {
                     $scope.sortRevert = !$scope.sortRevert;
+                } else {
+                    $scope.sortRevert = false;
                 }
                 $scope.sortColumn = column;
                 sort();
             };
             
-            $scope.selectRow = function(rowArray, $event) {
+            $scope.selectRow = function(rowArray) {
                 var str = "";
                 for (var i = 0; i < rowArray.length; i++) {
                     if (i > 0) {
@@ -82,9 +85,11 @@ app.directive("myTable", function(dataService, $document) {
                     str += rowArray[i];
                 }
                 $scope.selectedText = str;
-                angular.element(document.querySelectorAll('.myTable tr')).removeClass('active');
-                var tr = angular.element($event.currentTarget);
-                tr.addClass('active');
+                $scope.selectedObj = rowArray;
+            };
+            
+            $scope.isSelectedRow = function(rowArray) {
+                return rowArray === $scope.selectedObj;
             };
             
             $scope.range = function(min, max, step) {
@@ -102,14 +107,14 @@ app.directive("myTable", function(dataService, $document) {
             
             function resetSelection() {
                $scope.selectedText = "";
-               angular.element(document.querySelectorAll('.myTable tr')).removeClass('active'); 
+               $scope.selectedObj = undefined;
             }
             
             function filter() {
                 $scope.data = $scope.storedData.filter(function(arr) {
                     for (var i = 0; i < arr.length; i++) {
-                        var str = String(arr[i]);
-                        if (str.indexOf($scope.filterText) !== -1) {
+                        var str = String(arr[i]).toLowerCase();
+                        if (str.indexOf($scope.filterText.toLowerCase()) !== -1) {
                             return true;
                         }
                     }

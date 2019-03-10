@@ -6,7 +6,7 @@
     </label>
 </form>
                  
-<input ng-model="filterText" type="text" ng-show="loaded" placeholder="Поиск..." ng-change="filterByText()" />
+<input ng-model="filterText" class="searchField" type="text" ng-show="loaded" placeholder="Поиск..." ng-change="filterByText()" />
 <table class="myTable">
     <tr>
         <th ng-click="sortThisColumn($index)" ng-repeat="(key, value) in headData" >
@@ -16,7 +16,7 @@
             <span class="arrow_revert" ng-if="sortColumn === $index && sortRevert" ></span> 
         </th>
     </tr>
-    <tr ng-click="selectRow(arr, $event)" ng-repeat="(key, arr) in data | limitTo: limit : begin">
+    <tr ng-click="selectRow(arr)" ng-class="{'active': isSelectedRow(arr)}" ng-repeat="(key, arr) in data | limitTo: limit : begin">
         <td ng-repeat="(key, value) in arr">
             <input type="checkbox" ng-if="isBoolean(value)" ng-checked="value" disabled />
             <span ng-if="!isBoolean(value)" >{{value}}</span>
