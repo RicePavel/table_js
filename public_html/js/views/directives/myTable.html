@@ -16,11 +16,12 @@
             <span class="arrow_revert" ng-if="sortColumn === $index && sortRevert" ></span> 
         </th>
     </tr>
-    <tr ng-repeat="(key, arr) in data | limitTo: limit : begin">
+    <tr ng-click="selectRow(arr, $event)" ng-repeat="(key, arr) in data | limitTo: limit : begin">
         <td ng-repeat="(key, value) in arr">{{value}}</td>
     </tr>
 </table>
 
+<div>Выбрано: {{selectedText}}</div>
 
 <div class="pagination" ng-show="loaded && countPages > 1">
     <a href="#" ng-click="prevPage()"><<</a>

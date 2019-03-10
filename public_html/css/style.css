@@ -8,8 +8,12 @@
     padding: 10px;
 }
 
-.myTable th:hover {
+.myTable th:hover, .myTable tr:hover {
     cursor: pointer;
+}
+
+.myTable tr.active {
+    background: lightgray;
 }
 
 .thDiv {

@@ -1,4 +1,4 @@
-app.directive("myTable", function(dataService) {
+app.directive("myTable", function(dataService, $document) {
     return {
         link: function($scope, element, attrs) {
             $scope.headData = [];
@@ -17,7 +17,10 @@ app.directive("myTable", function(dataService) {
             $scope.sortColumn = undefined;
             $scope.sortRevert = false;
             
+            $scope.selectedText = "";
+            
             $scope.loadData = function() {
+                resetSelection();
                 $scope.filterText = "";
                 $scope.sortColumn = undefined;
                 $scope.sortRevert = false;
@@ -33,9 +36,9 @@ app.directive("myTable", function(dataService) {
             };
             
             $scope.filterByText = function() {
+                resetSelection();
                 filter();
-                $scope.sortColumn = undefined;
-                $scope.sortRevert = false;
+                sort();
                 setCountPages();
                 if ($scope.currentPage > $scope.countPages) {
                     selectPage($scope.countPages);
@@ -78,6 +81,25 @@ app.directive("myTable", function(dataService) {
                 $scope.sortColumn = column;
                 sort();
             };
+            
+            $scope.selectRow = function(rowArray, $event) {
+                var str = "";
+                for (var i = 0; i < rowArray.length; i++) {
+                    if (i > 0) {
+                        str += ", ";
+                    }
+                    str += rowArray[i];
+                }
+                $scope.selectedText = str;
+                angular.element(document.querySelectorAll('.myTable tr')).removeClass('active');
+                var tr = angular.element($event.currentTarget);
+                tr.addClass('active');
+            };
+            
+            function resetSelection() {
+               $scope.selectedText = "";
+               angular.element(document.querySelectorAll('.myTable tr')).removeClass('active'); 
+            }
             
             function filter() {
                 $scope.data = $scope.storedData.filter(function(arr) {
