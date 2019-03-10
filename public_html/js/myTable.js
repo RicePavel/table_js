@@ -45,15 +45,6 @@ app.directive("myTable", function(dataService, $document) {
                 }
             };
             
-            $scope.range = function(min, max, step) {
-                step = step || 1;
-                var input = [];
-                for (var i = min; i <= max; i += step) {
-                    input.push(i);
-                }
-                return input;
-            };
-            
             $scope.selectPage = function(n) {
                 selectPage(n);
                 return false;
@@ -94,6 +85,19 @@ app.directive("myTable", function(dataService, $document) {
                 angular.element(document.querySelectorAll('.myTable tr')).removeClass('active');
                 var tr = angular.element($event.currentTarget);
                 tr.addClass('active');
+            };
+            
+            $scope.range = function(min, max, step) {
+                step = step || 1;
+                var input = [];
+                for (var i = min; i <= max; i += step) {
+                    input.push(i);
+                }
+                return input;
+            };
+            
+            $scope.isBoolean = function(value) {
+                return ((typeof value) === 'boolean');
             };
             
             function resetSelection() {

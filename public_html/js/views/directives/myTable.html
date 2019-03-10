@@ -17,7 +17,10 @@
         </th>
     </tr>
     <tr ng-click="selectRow(arr, $event)" ng-repeat="(key, arr) in data | limitTo: limit : begin">
-        <td ng-repeat="(key, value) in arr">{{value}}</td>
+        <td ng-repeat="(key, value) in arr">
+            <input type="checkbox" ng-if="isBoolean(value)" ng-checked="value" disabled />
+            <span ng-if="!isBoolean(value)" >{{value}}</span>
+        </td>
     </tr>
 </table>
 
